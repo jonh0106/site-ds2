@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="recebe.html" id="form2">
+        <input type="text" name="usuario"> <br>
+        <input type="text" name="email">
+        <button type="submit"> Enviar </button>
+    </form>
+    <!-- Arquivos necessario para validar -->
+    <script src="../js/jquery-3.3.1.slim.min.js"></script>
+    <script src="../jquery-validation/dist/jquery.validate.min.js"></script>
+    <script>
+        $( document ).ready( function () {
+			$( "#form2" ).validate( {
+				rules: {
+					usuario:{
+                        required:true
+                    },
+                    email:{
+                        required:true,
+                        email:true
+                    }
+				},
+				messages: {
+					usuario:{
+                        required:"O campo e obrigatorio"
+                    },
+                    email:{
+                        required:"O E-mail e obrigatorio",
+                        email:"Informe um E-mail valido"
+                    }
+				},
+				errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+					error.insertAfter( element );
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+				}
+			} );
+
+		} );
+    </script>
+</body>
+</html>
