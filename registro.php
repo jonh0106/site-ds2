@@ -58,7 +58,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-unlock-alt"></i></span>
                         </div>
-                        <input type="password" name="senha" class="form-control" placeholder="Senha" aria-label="senha" aria-describedby="basic-addon1">
+                        <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" aria-label="senha" aria-describedby="basic-addon1">
                     </div>
 
                     <!-- caixa para confirmar a senha -->
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input type="checkbox" name="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">
                             Aceitar os <a href="#" data-toggle="modal" data-target="#Termos">Termos</a>
                         </label>
@@ -79,7 +79,7 @@
 
 
                     <div class="form-group text-right">
-                        <button Type="button" class="btn btn-primary "> Cadastar </button>
+                        <button type="submit" class="btn btn-primary "> Cadastar </button>
                     </div>
 
 
@@ -137,30 +137,47 @@ $(document).ready(function (){
     $("#form-registro").validate({
         rules:{
            nome:{
-               require:true
+               required:true
            },
            email:{
-               require:true,
+               required:true,
                email:true
            },
            senha:{
-               require:true,
+               required:true,
                minlength: 6
+           },
+           confirmaSenha:{
+               required:true,
+               minlength: 6,
+               equalTo: "#senha"
+           },
+           checkbox:{
+               required:true
            }
+
 
         },
         messages:{
             nome:{
-                require:"Nome obrigatorio"
+                required:"Nome obrigatorio"
             },
             email:{
-            require:"O E-mail e obrigatorio",
+            required:"O E-mail e obrigatorio",
             email:"Informe um E-mail valido"
         },
          senha:{
-             require:"Informe uma senha",
+             required:"Informe uma senha",
              minlength:"Informe uma senha minima de 6 digitos"
 
+         },
+         confirmaSenha:{
+             required:"Confirme sua senha",
+             minlength:"A senha tem que ter no mínimo 6 caracteres",
+             equalTo:"Por favor, digite a mesma senha acima"
+         },
+         checkbox:{
+             required:"Esse campo e obrigatório!"
          }
 
         },
@@ -168,7 +185,12 @@ $(document).ready(function (){
 				errorPlacement: function ( error, element ) {
 					// Add the `invalid-feedback` class to the error element
 					error.addClass( "invalid-feedback" );
-					error.insertAfter( element );
+                    if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.next( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+					
 				},
 				highlight: function ( element, errorClass, validClass ) {
 					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
