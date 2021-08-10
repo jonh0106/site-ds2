@@ -29,7 +29,7 @@
         <a href="index.php">DS II </a>
         </h1>
         <p class="text-center"> Faça o login para iniciar a sessão </p>
-              <form action="">
+              <form action="" id="form-login">
 
            <!-- caixa de e-mail -->
 
@@ -37,7 +37,7 @@
                  <div class="input-group-prepend">
                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope-open"></i></span>
               </div>
-                <input type="text" name="E-mail" class="form-control" placeholder="E-mail" aria-label="E-mail" aria-describedby="basic-addon1">
+                <input type="text" name="email" class="form-control" placeholder="E-mail" aria-label="email" aria-describedby="basic-addon1">
               </div>
 
             <!-- caixa para senha -->
@@ -46,11 +46,11 @@
                  <div class="input-group-prepend">
                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-unlock-alt"></i></span>
               </div>
-                <input type="password" name="Senha" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="basic-addon1">
+                <input type="password" name="senha" class="form-control" placeholder="Senha" aria-label="senha" aria-describedby="basic-addon1">
               </div>
                
               <div class="form-group text-right">
-              <button Type="button" class="btn btn-primary "> Entrar </button>
+              <button Type="submit" class="btn btn-primary "> Entrar </button>
               </div>
 
 
@@ -81,6 +81,51 @@
     <!-- Foi colocado no final para a página carregar mais rápido -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-  
+    <script src="jquery-validation/dist/jquery.validate.min.js"></script>
+     <script>
+       $(document).ready(function(){
+         $("#form-login").validate({
+           rules:{
+             email:{
+               required:true,
+               email:true
+             },
+             senha:{
+               required:true
+             }
 
-</body></html>
+           },
+           messages:{
+             email:{
+               required:"Esse campo e obrigatório!",
+               email:"Por favor insira um E-mail válido"
+             },
+             senha:{
+               required:"Por favor, insira uma senha!"
+             }
+
+           },
+           errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+                    if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.next( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+					
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+				}
+         })
+       })
+       
+     </script>
+</body>
+
+</html>
