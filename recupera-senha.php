@@ -32,7 +32,7 @@
                     <a href="index.php">DS II </a>
                 </h1>
                 <p class="text-center"> Informe seu E-mail para recuperar a senha </p>
-                <form action="">
+                <form action="" id="form-recupera">
 
                     <!-- caixa de e-mail -->
 
@@ -40,14 +40,15 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope-open"></i></span>
                         </div>
-                        <input type="text" name="E-mail" class="form-control" placeholder="E-mail" aria-label="E-mail" aria-describedby="basic-addon1">
+                        <input type="text" name="email" class="form-control" placeholder="E-mail" aria-label="email" aria-describedby="basic-addon1">
                     </div>
 
+                    <div class="form-group text-right">
+                        <button type="submit" class="btn btn-primary"> Recuperar </button>
+                    </div>
 
                 </form>
-                <div class="form-group text-right">
-                    <button type="button" class="btn btn-primary"> Recuperar </button>
-                </div>
+
                 <p>
 
                     <a href="login.php">Fazer login</a>
@@ -68,6 +69,43 @@
     <!-- Foi colocado no final para a página carregar mais rápido -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="jquery-validation/dist/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#form-recupera").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    }
+
+                },
+                messages: {
+                    email: {
+                        required: "Para recuperar a senha, insira um E-mail!",
+                        email: "Por favor, insira um E-mail válido!"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function(error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            })
+        })
+    </script>
 
 
 </body>
