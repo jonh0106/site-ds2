@@ -32,7 +32,25 @@
                     <a href="index.php">DS II </a>
                 </h1>
                 <p class="text-center"> Crie sua conta gratuita </p>
-                <form action="" id="form-registro">
+
+                    <?php session_start();
+                    
+                    if( isset($_GET['erro']) ){
+
+                        $erros = $_SESSION['mensagemErro'];
+
+                        $dadosForm = $_SESSION['dadosForm'];
+
+                    
+
+                    }
+                    
+                    ?>
+
+
+
+
+                <form action="cria-conta.php" method="post" id="form-registro">
 
                     <!-- campo para nome-->
 
@@ -40,7 +58,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="nome" class="form-control" placeholder="Nome Completo" aria-label="nome" aria-describedby="basic-addon1">
+                        <input type="text" name="nome" class="form-control" placeholder="Nome Completo" aria-label="nome" aria-describedby="basic-addon1" value="<?php echo @$dadosForm['nome']; ?>">
                     </div>
 
                     <!-- caixa de e-mail -->
@@ -49,7 +67,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope-open"></i></span>
                         </div>
-                        <input type="text" name="email" class="form-control" placeholder="E-mail" aria-label="email" aria-describedby="basic-addon1">
+                        <input type="text" name="email" class="form-control" placeholder="E-mail" aria-label="email" aria-describedby="basic-addon1" value="<?php echo @$dadosForm['nome']; ?>" >
                     </div>
 
                     <!-- caixa para senha -->
@@ -58,7 +76,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-unlock-alt"></i></span>
                         </div>
-                        <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" aria-label="senha" aria-describedby="basic-addon1">
+                        <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" aria-label="senha" aria-describedby="basic-addon1" value="<?php echo @$dadosForm['nome']; ?>">
                     </div>
 
                     <!-- caixa para confirmar a senha -->
@@ -67,15 +85,47 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-unlock-alt"></i></span>
                         </div>
-                        <input type="password" name="confirmaSenha" class="form-control" placeholder="Repita a Senha" aria-label="senha" aria-describedby="basic-addon1">
+                        <input type="password" name="confirmaSenha" class="form-control" placeholder="Repita a Senha" aria-label="senha" aria-describedby="basic-addon1" value="<?php echo @$dadosForm['nome']; ?>">
                     </div>
 
+                    <?php 
+                    
+                            if( isset($dadosForm['checkbox']) ){
+
+                                $checked = "checked='checked' ";
+                                
+                            }
+                    
+                    ?>
+
+
                     <div class="form-group form-check">
-                        <input type="checkbox" name="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input type="checkbox" name="checkbox" class="form-check-input" id="exampleCheck1"
+                        <?php echo @$checked; ?>>
                         <label class="form-check-label" for="exampleCheck1">
                             Aceitar os <a href="#" data-toggle="modal" data-target="#Termos">Termos</a>
                         </label>
                     </div>
+
+                    <?php 
+                    
+                    if(isset( $erros)){
+
+                        echo "<ul class='alert alert-danger'>";
+
+                        foreach($erros as $mensagem){ 
+                                echo "<li> $mensagem </li>";
+
+                        
+                            }
+
+                            echo "</ul>";
+
+                    }
+                    
+                    ?>
+
+
 
 
                     <div class="form-group text-right">
